@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:to_do_app": "node dist/to_do_app/server/server.mjs",
-    "build:prod": "ng build --configuration production --base-href https://P-Camacho.github.io/todo-app/"
+    "build:prod": "ng build --configuration production --base-href https://claudio-delvalle.github.io/todo-app/"
   },
   "private": true,
   "dependencies": {

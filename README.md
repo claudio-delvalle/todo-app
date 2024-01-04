@@ -1,3 +1,7 @@
+
+[![Deployment Pipeline](https://github.com/claudio-delvalle/todo-app/actions/workflows/pipeline.yml/badge.svg)](https://github.com/claudio-delvalle/todo-app/actions/workflows/pipeline.yml)
+
+
 # ToDoApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.

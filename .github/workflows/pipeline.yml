@@ -7,6 +7,9 @@ on:
 
 jobs:
   deploy:
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -19,9 +22,7 @@ jobs:
       run: npm install
     - name: Build
       run: npm run build:prod
-
     - name: Deploy GitHub Pages site
       uses: actions/deploy-pages@v4.0.2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+
             

@@ -1,37 +1,26 @@
-name: Deployment Pipeline
-
-# on:
-#   push:
-#     branches:
-#       - "main"
+name: Deploy to Github Pages
 
 on: workflow_dispatch
 
 jobs:
-  deploy:
+  setup:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v4
+    - uses: actions/setup-node@v3
       with:
-        fetch-depth: 0
-        token: ${{ github.token }}
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-    - name: Install Dependencies
-      run: npm install
-    - name: Build
-      run: npm run build:prod
-    - name: Prepare and Deploy
-      run: npx angular-cli-ghpages --repo=https://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@github.com/claudio-delvalle/todo-app.git --name=claudio-delvalle --email=claudio.delvalle@globant.com --dir=dist/todo-app/browser --no-silent
-    # - name: Build
-    #   run: npm run build:prod
-    # - name: Upload Artifact
-    #   uses: actions/upload-pages-artifact@v3
-    #   with:
-    #     name: github-pages
-    #     path: dist/todo-app
-    # - name: Deploy GitHub Pages site
-    #   uses: actions/deploy-pages@v4.0.2
+        node-version: '20'
+    - run: npm install
+    
+  build:
+    needs: [setup]
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: npm run build
+  # deploy:
+  #   needs: [setup, build]
+   
 
             

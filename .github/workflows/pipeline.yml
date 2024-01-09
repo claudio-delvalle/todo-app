@@ -23,7 +23,7 @@ jobs:
     - name: Build
       run: npm run build:prod
     - name: Prepare and Deploy
-      run: npx angular-cli-ghpages --repo=https://github.com/claudio-delvalle/todo-app.git --name="claudio-delvalle" --email=claudio.delvalle@globant.com --dir=dist/todo-app/browser --no-silent
+      run: npx angular-cli-ghpages --repo=https://${{ env.GH_TOKEN }}@github.com/claudio-delvalle/todo-app.git --name="claudio-delvalle" --email=claudio.delvalle@globant.com --dir=dist/todo-app/browser --no-silent
     # - name: Build
     #   run: npm run build:prod
     # - name: Upload Artifact

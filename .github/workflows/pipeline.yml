@@ -26,7 +26,7 @@ jobs:
     - name: Build
       run: npm run build:prod
     - name: Prepare and Deploy
-      run: npx angular-cli-ghpages --dir=dist/todo-app/browser
+      run: npx angular-cli-ghpages --dir=dist/todo-app/browser --no-silent
     # - name: Build
     #   run: npm run build:prod
     # - name: Upload Artifact

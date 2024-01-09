@@ -23,7 +23,7 @@ jobs:
     - name: Install Dependencies
       run: npm install
     - name: Build
-      run: ng build
+      run: npm run build:prod
     - name: Prepare and Deploy
       run: npx angular-cli-ghpages --dir=dist/todo-app/browser
     # - name: Build

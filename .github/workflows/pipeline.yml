@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         name: github-pages
-        path: dist/
+        path: dist/todo-app
     - name: Deploy GitHub Pages site
       uses: actions/deploy-pages@v4.0.2
 

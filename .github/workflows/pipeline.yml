@@ -9,15 +9,11 @@ on: workflow_dispatch
 
 jobs:
   deploy:
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        token: ${{ secrets.GH_TOKEN }}
     - uses: actions/setup-node@v4
       with:
         node-version: 20

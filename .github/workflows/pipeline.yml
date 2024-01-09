@@ -22,14 +22,16 @@ jobs:
         node-version: 20
     - name: Install Dependencies
       run: npm install
-    - name: Build
-      run: npm run build:prod
-    - name: Upload Artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        name: github-pages
-        path: dist/todo-app
-    - name: Deploy GitHub Pages site
-      uses: actions/deploy-pages@v4.0.2
+    - name: Prepare and Deploy
+      run: npx angular-cli-ghpages --dir=dist/todo-app/browser
+    # - name: Build
+    #   run: npm run build:prod
+    # - name: Upload Artifact
+    #   uses: actions/upload-pages-artifact@v3
+    #   with:
+    #     name: github-pages
+    #     path: dist/todo-app
+    # - name: Deploy GitHub Pages site
+    #   uses: actions/deploy-pages@v4.0.2
 
             

@@ -14,14 +14,16 @@ jobs:
         node-version: '20.x'
     - name: Install dependencies
       run: npm install
-    
-  build:
-    needs: [setup]
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Build proyect
       run: npm run build
+    
+  # build:
+  #   needs: [setup]
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Build proyect
+  #     run: npm run build
       
   # deploy:
   #   needs: [setup, build]

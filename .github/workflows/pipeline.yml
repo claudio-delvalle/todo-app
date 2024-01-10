@@ -20,6 +20,7 @@ jobs:
       - run: npm install eslint --global
       - run: npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
       - run: eslint . --ext .js,.jsx,.ts,.tsx
+      - run: npm test
       - run: npm ci
       - run: npm run build --prod
       - run: cp ./dist/todo-app/browser/index.html ./dist/todo-app/browser/404.html

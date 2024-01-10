@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+
+      - run: npm install eslint --global
       - run: eslint . --ext .js,.jsx,.ts,.tsx
       - run: npm ci
       - run: npm run build --prod

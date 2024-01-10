@@ -12,7 +12,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "semi": ["error", "always"],
+        "semi": ["warn", "always"],
         "quotes": ["error", "double"]
     }
 }

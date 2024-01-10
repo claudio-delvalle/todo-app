@@ -16,10 +16,17 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-      - uses: abhi1693/setup-browser@v0.3.4
+      - name: Install chrome
+        uses: ./
         with:
-          browser: chrome
-          version: latest
+          chrome-version: ${{ inputs.chrome-version }}
+        id: setup-chrome
+      - if: runner.os == 'Linux' || runner.os == 'macOS'
+        run: |
+          "${{ steps.setup-chrome.outputs.chrome-path }}" --version
+      - if: runner.os == 'Windows'
+        run: |
+          (Get-Item (Get-Command "${{ steps.setup-chrome.outputs.chrome-path }}").Source).VersionInfo.ProductVersion
 
       - run: npm install eslint --global
       - run: npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript

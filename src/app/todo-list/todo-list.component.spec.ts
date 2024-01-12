@@ -45,7 +45,7 @@ describe('TodoListComponent', () => {
     component.todos=[];
     fixture.detectChanges();
     mensaje=host.querySelector('.emptyTodos')?.textContent;
-    expect(mensaje).toContain('Lista Vacia')
+    expect(mensaje).toContain('Lista Vacia');
   });
 
   it('should display error case', () => {

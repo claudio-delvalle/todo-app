@@ -11,7 +11,4 @@ import { Component } from '@angular/core';
 export class TodoListComponent {
   todos: string[] = [];
 
-  onEmptyTodos(){
-
-  }
 }

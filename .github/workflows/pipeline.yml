@@ -16,14 +16,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-      - uses: nanasess/setup-chromedriver@v2
+      - uses: browser-actions/setup-chrome@v1
         with:
-          # Optional: do not specify to match Chrome's version
-          chromedriver-version: '88.0.4324.96'
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
-          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+          chrome-version: 120.0.6099.109
 
       - run: npm install eslint --global
       - run: npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript

@@ -40,6 +40,12 @@ describe('TodoListComponent', () => {
   it('should display empty case', () => {
     // if 'todos' property empty
     // make sure that 'empty' message displays
+    let mensaje;
+    const host: HTMLElement = fixture.nativeElement;
+    component.todos=[];
+    fixture.detectChanges();
+    mensaje=host.querySelector('emptyTodos')
+    expect(mensaje).toBeDefined();
   });
 
   it('should display error case', () => {

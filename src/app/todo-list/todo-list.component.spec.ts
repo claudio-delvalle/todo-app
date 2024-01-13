@@ -51,5 +51,17 @@ describe('TodoListComponent', () => {
   it('should display error case', () => {
     // if 'error'
     // make sure that 'error' message displays
+    const host: HTMLElement = fixture.nativeElement;
+
+    expect(() => {
+      component.verificarLista(['elemento1', 'elemento2', 3]);
+    }).toThrowError(TypeError, 'Todos los elementos de la lista deben ser strings');
+    let mensaje;
+
+    fixture.detectChanges();
+    mensaje=host.querySelector('.error')?.textContent;
+    expect(mensaje).toContain('Ocurrio un error');
   });
-});
+  });
+
+

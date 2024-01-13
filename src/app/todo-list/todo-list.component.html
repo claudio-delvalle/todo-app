@@ -3,4 +3,15 @@
         <li>{{todo}}</li>
     }
 </ul>
-<h5 *ngIf="todos.length==0" class="emptyTodos">Lista Vacia</h5>
+<div>
+    @if ("todos.length==0"){
+
+        <h5 class="emptyTodos">Lista Vacia</h5>
+    }
+</div>
+<div>
+    @if ("error"){
+        <h5 class="error">Ocurrio un error</h5>
+    }
+</div>
+

@@ -1,9 +1,12 @@
+<!-- TODO: Create Todo component -->
+<!-- TODO: Use mat-checkbox -->
 <ul>
     @for (todo of todos; track $index) {
         <li>{{todo}}</li>
     }
 </ul>
 <div>
+    <!-- TODO: remove quotes -->
     @if ("todos.length==0"){
 
         <h5 class="emptyTodos">Lista Vacia</h5>

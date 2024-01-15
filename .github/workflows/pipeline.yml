@@ -19,7 +19,7 @@ jobs:
   
       - run: npm ci
       - run: npm run lint
-      - run: npm run test
+      - run: npm run test-headless
       - run: npm run build --prod
       - run: cp ./dist/todo-app/browser/index.html ./dist/todo-app/browser/404.html
 

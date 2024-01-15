@@ -25,6 +25,8 @@ export class TodoListComponent {
         throw new TypeError(
           'Todos los elementos de la lista deben ser strings'
         );
+
+
       }
     }
   }

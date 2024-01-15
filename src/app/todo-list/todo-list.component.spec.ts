@@ -8,10 +8,9 @@ describe('TodoListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TodoListComponent]
-    })
-    .compileComponents();
-    
+      imports: [TodoListComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TodoListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -35,15 +34,35 @@ describe('TodoListComponent', () => {
     todos = host.querySelectorAll('li');
     expect(component.todos).toBeDefined();
     expect(todos.length).toBeTruthy();
+    expect(host.querySelector('.error')).toBeFalsy();
   });
 
   it('should display empty case', () => {
     // if 'todos' property empty
     // make sure that 'empty' message displays
+    let mensaje = undefined;
+    const host: HTMLElement = fixture.nativeElement;
+    component.todos = [];
+    fixture.detectChanges();
+    mensaje = host.querySelector('.emptyTodos')?.textContent;
+    expect(mensaje).toContain('Lista Vacia');
   });
 
   it('should display error case', () => {
     // if 'error'
     // make sure that 'error' message displays
+    const host: HTMLElement = fixture.nativeElement;
+
+    expect(() => {
+      component.verificarLista(['elemento1', 'elemento2', 3]);
+    }).toThrowError(
+      TypeError,
+      'Todos los elementos de la lista deben ser strings' // TODO: use constant
+    );
+    let mensaje = undefined;
+
+    fixture.detectChanges();
+    mensaje = host.querySelector('.error')?.textContent;
+    expect(mensaje).toContain('Ocurrio un error');
   });
 });

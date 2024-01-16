@@ -10,7 +10,8 @@
     "test-headless": "ng test --no-watch --no-progress --browsers=ChromeHeadless",
     "serve:ssr:todo-app": "node dist/todo-app/server/server.mjs",
     "build:prod": "ng build --configuration production --base-href /todo-app/",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -46,12 +47,14 @@
     "@typescript-eslint/eslint-plugin": "6.18.0",
     "@typescript-eslint/parser": "6.18.0",
     "eslint": "^8.56.0",
+    "husky": "^8.0.3",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.2.0",
     "typescript": "~5.2.2"
   }
 }

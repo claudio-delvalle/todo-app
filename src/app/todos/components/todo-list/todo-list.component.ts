@@ -12,21 +12,24 @@ export class TodoListComponent {
   error = false;
 
   constructor() {
+    this.verificarYManejarErrores(this.todos);
+  }
+  
+  verificarYManejarErrores(lista: unknown[]): void {
     try {
-      this.verificarLista(this.todos);
+      this.verificarLista(lista);
       this.error = false;
     } catch {
       this.error = true;
     }
   }
+
   verificarLista(lista: unknown[]): void {
     for (const elemento of lista) {
       if (typeof elemento !== 'string') {
         throw new TypeError(
           'Todos los elementos de la lista deben ser strings'
         );
-
-
       }
     }
   }

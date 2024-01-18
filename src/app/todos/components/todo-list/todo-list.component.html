@@ -1,10 +1,5 @@
 <!-- TODO: Create Todo component -->
 <!-- TODO: Use mat-checkbox -->
-<ul>
-    @for (todo of todoList; track $index) {
-        <li>{{todo}}</li>
-    }
-</ul>
 <div>
     <!-- TODO: remove quotes -->
     @if (todoList.length==0){
@@ -18,9 +13,9 @@
     }
 </div>
 
-<mat-card>
+<mat-card class="todoList">
     @for (todo of todoList; track $index) {
-    <app-todo [todo]="todo"></app-todo>
+    <app-todo class="todoItem"  [todo]="todo"></app-todo>
     }
 </mat-card>
 

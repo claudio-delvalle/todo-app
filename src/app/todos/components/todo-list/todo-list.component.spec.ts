@@ -31,7 +31,7 @@ describe('TodoListComponent', () => {
     const host: HTMLElement = fixture.nativeElement;
     component.todoList.push({title:'prueba',timeHour:15,checkbox:false});
     fixture.detectChanges();
-    todos = host.querySelectorAll('li');
+    todos = host.querySelectorAll('.todoItem');
     expect(component.todoList).toBeDefined();
     expect(todos.length).toBeTruthy();
     expect(host.querySelector('.error')).toBeFalsy();

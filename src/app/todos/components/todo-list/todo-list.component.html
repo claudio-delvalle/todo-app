@@ -1,13 +1,13 @@
 <!-- TODO: Create Todo component -->
 <!-- TODO: Use mat-checkbox -->
 <ul>
-    @for (todo of todos; track $index) {
+    @for (todo of todoList; track $index) {
         <li>{{todo}}</li>
     }
 </ul>
 <div>
     <!-- TODO: remove quotes -->
-    @if (todos.length==0){
+    @if (todoList.length==0){
 
         <h5 class="emptyTodos">Lista Vacia</h5>
     }
@@ -17,4 +17,13 @@
         <h5 class="error">Ocurrio un error</h5>
     }
 </div>
+
+<mat-card>
+    @for (todo of todoList; track $index) {
+    <app-todo [todo]="todo"></app-todo>
+    }
+</mat-card>
+
+
+
 

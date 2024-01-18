@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { TodoListComponent } from '../../components/todo-list/todo-list.component';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../interfaces/todo';
 
 @Component({
   selector: 'app-home-page',
@@ -10,4 +12,9 @@ import { TodoListComponent } from '../../components/todo-list/todo-list.componen
 })
 export class HomePageComponent {
 
+  constructor(private todoService:TodoService){}
+
+  get todoList():Todo[]{
+  return this.todoService.getTodoList();  
+  }
 }

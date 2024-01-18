@@ -29,10 +29,10 @@ describe('TodoListComponent', () => {
      */
     let todos = undefined;
     const host: HTMLElement = fixture.nativeElement;
-    component.todos.push('first todo');
+    component.todoList.push({title:'prueba',timeHour:15,checkbox:false});
     fixture.detectChanges();
     todos = host.querySelectorAll('li');
-    expect(component.todos).toBeDefined();
+    expect(component.todoList).toBeDefined();
     expect(todos.length).toBeTruthy();
     expect(host.querySelector('.error')).toBeFalsy();
   });
@@ -42,7 +42,7 @@ describe('TodoListComponent', () => {
     // make sure that 'empty' message displays
     let mensaje = undefined;
     const host: HTMLElement = fixture.nativeElement;
-    component.todos = [];
+    component.todoList = [];
     fixture.detectChanges();
     mensaje = host.querySelector('.emptyTodos')?.textContent;
     expect(mensaje).toContain('Lista Vacia');

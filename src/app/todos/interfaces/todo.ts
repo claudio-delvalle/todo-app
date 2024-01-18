@@ -1,9 +1,6 @@
 export interface Todo {
-    title:string,
-    description?:string,
-    dateDay?:number,
-    dateMonth?:number,
-    timeHour:number,
-    timeMin?:number,
-    checkbox:boolean,
+    title: string;
+    description?: string;
+    dueDate?: Date;
+    complete: boolean;
 }

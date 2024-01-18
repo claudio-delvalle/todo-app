@@ -20,7 +20,7 @@
 </mat-card>
 
 @if (isAdding) {
-    <app-todo-form></app-todo-form>
+    <app-todo-form (newTodo)="newTodo($event)" ></app-todo-form>
 }
 <app-add-button (add)="isAdding = true"></app-add-button>
 

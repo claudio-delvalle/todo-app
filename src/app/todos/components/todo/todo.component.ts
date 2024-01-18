@@ -7,7 +7,7 @@ import { Todo } from '../../interfaces/todo';
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [MatCheckboxModule,MatCardModule],
+  imports: [MatCheckboxModule, MatCardModule ],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.css'
 })

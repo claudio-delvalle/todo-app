@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { Todo } from '../../interfaces/todo';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
+import { FormGroup } from '@angular/forms';
+import { TodoService } from '../../services/todo.service';
 
 
 @Component({
@@ -24,8 +26,13 @@ export class TodoListComponent {
 
   error = false;
 
-  constructor() {
+  constructor(private todoService:TodoService) {
     this.verificarYManejarErrores(this.todoList);
+  }
+
+  newTodo(todoForm:FormGroup):void{
+
+
   }
 
   verificarYManejarErrores(lista: unknown[]): void {

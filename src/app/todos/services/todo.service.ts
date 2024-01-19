@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Todo } from '../interfaces/todo';
 import { TODOS } from '../../Todos-Examples';
-import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,14 @@ export class TodoService {
     return this.todoList;
   } 
 
-  newTodo(todoForm:FormGroup):void{
-    const todo:Todo=(todoForm.value);
+  newTodo ( todoDetails : { title:string, description:string, dueDate?:Date }) : void {
+    const {title,description,dueDate,}=todoDetails;
+    const todo = {
+      title,
+      description,
+      dueDate,
+      complete:false,
+    }
     this.todoList.push(todo);
 
   }

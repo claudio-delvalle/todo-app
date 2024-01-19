@@ -7,19 +7,21 @@ import { AddButtonComponent } from '../../../shared/components/add-button/add-bu
 import { TodoFormComponent } from '../todo-form/todo-form.component';
 
 import { TodoService } from '../../services/todo.service';
-import { FormGroup } from '@angular/forms';
 
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [TodoComponent, MatCardModule, AddButtonComponent,TodoFormComponent],
+  imports: [
+    TodoComponent,
+    MatCardModule,
+    AddButtonComponent,
+    TodoFormComponent,
+  ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
 })
 export class TodoListComponent {
-
-  
   @Input()
   todoList: Todo[] = [];
 
@@ -27,12 +29,16 @@ export class TodoListComponent {
 
   error = false;
 
-  constructor(private todoService:TodoService) {
+  constructor(private todoService: TodoService) {
     this.verificarYManejarErrores(this.todoList);
   }
 
-  newTodo(todoForm:FormGroup):void{
-    this.todoService.newTodo(todoForm);
+  newTodo(todoDetails: {
+    title: string;
+    description: string;
+    dueDate?: Date;
+  }): void {
+    this.todoService.newTodo(todoDetails);
   }
 
   verificarYManejarErrores(lista: unknown[]): void {

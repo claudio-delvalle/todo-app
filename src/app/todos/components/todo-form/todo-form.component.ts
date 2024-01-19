@@ -25,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class TodoFormComponent {
   todoForm: FormGroup;
+  today = new Date();
 
   // TODO: Add output that emits a new Todo DONE
 

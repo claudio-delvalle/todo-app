@@ -23,7 +23,6 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './todo-list.component.css',
 })
 export class TodoListComponent implements OnInit {
-
   @Input()
   todoList: Todo[] = [];
 
@@ -48,14 +47,15 @@ export class TodoListComponent implements OnInit {
     dueDate?: Date;
   }): void {
     const { title, description, dueDate } = todoDetails;
-    //const date = dueDate?.getMonth.toString() + '-' + dueDate?.getDay.toString() + '-' + dueDate?.getFullYear.toString;
-    const todoSend : Todo= {
+    const todoSend: Todo = {
       title,
       description,
       dueDate,
       complete: false,
     };
-    this.todoService.addTodo(todoSend);
+    this.todoService.addTodo(todoSend).subscribe();
+    console.log(todoSend);
+    console.log('De aqui le manda al service');
   }
 
   // newTodo(todoDetails: {

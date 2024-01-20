@@ -18,6 +18,8 @@ export class TodoService {
   }
 
   addTodo(todo: Todo): Observable<Todo> {
+    console.log(todo);
+    console.log('Esto recibe el service');
     return this.http.post<Todo>(`${this.baseUrl}/todos`, todo);
   }
 

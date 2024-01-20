@@ -18,10 +18,12 @@ export class TodoComponent {
   public todo?: Todo;
   
   @Output()
-  public done: EventEmitter<boolean> = new EventEmitter();
+  public done: EventEmitter<string> = new EventEmitter();
+
+  
 
   todoDone(): void{
-    this.done.emit(true);
+    this.done.emit(this.todo?.id);
     this.toStrike = true;
   }
 }

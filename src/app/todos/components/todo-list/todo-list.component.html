@@ -15,7 +15,7 @@
 
 <mat-card class="todoList">
     @for (todo of todoList; track $index) {
-    <app-todo class="todoItem"  [todo]="todo"></app-todo>
+    <app-todo class="todoItem"  [todo]="todo"  (done)="doneTodo($event)"></app-todo>
     }
 </mat-card>
 

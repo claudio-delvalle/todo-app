@@ -33,6 +33,10 @@ export class TodoListComponent {
     this.verificarYManejarErrores(this.todoList);
   }
 
+  doneTodo(id:string):void {
+    this.todoService.doneTodo(id);
+  }
+
   newTodo(todoDetails: {
     title: string;
     description: string;

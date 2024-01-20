@@ -27,6 +27,10 @@ export class TodoService {
 
   }
 
+  doneTodo(id:string): void{
+    id.split
+  }
+
   
 }
 

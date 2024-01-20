@@ -1,13 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TodoComponent } from '../todo/todo.component';
 
 import { MatCardModule } from '@angular/material/card';
-import { Todo } from '../../interfaces/todo';
+import { Todo } from '../../interfaces/todo.interface';
 import { AddButtonComponent } from '../../../shared/components/add-button/add-button.component';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
 
 import { TodoService } from '../../services/todo.service';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-todo-list',
@@ -17,11 +17,12 @@ import { TodoService } from '../../services/todo.service';
     MatCardModule,
     AddButtonComponent,
     TodoFormComponent,
+    HttpClientModule,
   ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
 })
-export class TodoListComponent {
+export class TodoListComponent implements OnInit {
   @Input()
   todoList: Todo[] = [];
 
@@ -32,8 +33,11 @@ export class TodoListComponent {
   constructor(private todoService: TodoService) {
     this.verificarYManejarErrores(this.todoList);
   }
+  ngOnInit(): void {
+    this.todoService.getTodos().subscribe((todos) => (this.todoList = todos));
+  }
 
-  doneTodo(id:string):void {
+  doneTodo(id: string): void {
     this.todoService.doneTodo(id);
   }
 

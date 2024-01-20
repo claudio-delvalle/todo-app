@@ -11,6 +11,7 @@ import { HomePageComponent } from './todos/pages/home-page/home-page.component';
     CommonModule,
     RouterOutlet,
     HomePageComponent,
+    
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
-import { Todo } from '../../interfaces/todo';
+import { Todo } from '../../interfaces/todo.interface';
 import { StrikethroughDirective } from '../../../directives/strikethrough.directive';
 
 @Component({
@@ -16,13 +16,11 @@ export class TodoComponent {
 
   @Input()
   public todo?: Todo;
-  
+
   @Output()
   public done: EventEmitter<string> = new EventEmitter();
 
-  
-
-  todoDone(): void{
+  todoDone(): void {
     this.done.emit(this.todo?.id);
     this.toStrike = true;
   }

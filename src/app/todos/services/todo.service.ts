@@ -1,52 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Todo } from '../interfaces/todo.interface';
-import { TODOS } from '../../Todos-Examples';
+
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { environments } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  private todoList: Todo[] = TODOS;
-
   private baseUrl: string = environments.baseUrl;
 
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  getTodos(): Observable<Todo[]>{
+  getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${this.baseUrl}/todos`);
-    }
-
-
-
-
-
-
-
-
-  public getTodoList() {
-    return this.todoList;
   }
 
-
-  newTodo(todoDetails: {
-    title: string;
-    description: string;
-    dueDate?: Date;
-  }): void {
-    const { title, description, dueDate } = todoDetails;
-    const todo = {
-      title,
-      description,
-      dueDate,
-      complete: false,
-    };
-    this.todoList.push(todo);
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.http.post<Todo>(`${this.baseUrl}/todos`, todo);
   }
 
-  doneTodo(id: string): void {
-    id.split;
+  updateTodo(todo: Todo): Observable<Todo> {
+    if (!todo.id) throw Error('Hero id is required');
+    return this.http.put<Todo>(`${this.baseUrl}/todos/${todo.id}`, todo);
+  }
+
+  deleteTodoById(id: string): Observable<boolean> {
+    return this.http.delete(`${this.baseUrl}/todos/${id}`).pipe(
+      catchError((err) => {
+        console.error('Hubo un error al eliminar el todo:', err);
+        return of(false);
+      }),
+      map((resp) => {
+        console.log('Respuesta del servidor:', resp);
+        return true;
+      })
+    );
   }
 }

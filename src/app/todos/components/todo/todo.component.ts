@@ -18,10 +18,17 @@ export class TodoComponent {
   public todo?: Todo;
 
   @Output()
-  public done: EventEmitter<string> = new EventEmitter();
+  public done: EventEmitter<Todo> = new EventEmitter();
 
   todoDone(): void {
-    this.done.emit(this.todo?.id);
-    this.toStrike = true;
+    if (this.todo?.complete === false) {
+      this.todo.complete = true;
+      this.done.emit(this.todo);
+      this.toStrike = true;
+    } else if (this.todo?.complete === true) {
+      this.toStrike = false;
+      this.todo.complete = false;
+      this.done.emit(this.todo);
+    }
   }
 }

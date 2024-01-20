@@ -24,13 +24,16 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './todo-form.component.css',
 })
 export class TodoFormComponent {
-
   todoForm: FormGroup;
 
   today = new Date();
 
   @Output()
-  public newTodo: EventEmitter<{ title:string, description:string, dueDate?:Date }> = new EventEmitter();
+  public newTodo: EventEmitter<{
+    title: string;
+    description: string;
+    dueDate?: Date;
+  }> = new EventEmitter();
 
   // TODO: Add output that emits a new Todo DONE
 
@@ -47,13 +50,10 @@ export class TodoFormComponent {
       ]),
       description: new FormControl('', Validators.maxLength(20)),
       dueDate: new FormControl(''), // TODO: Make type 'Date' (use DatePicker) DONE
-      complete: new FormControl(false),
     });
 
     this.todoForm.valueChanges.subscribe((values) => console.log(values));
   }
-
-
 
   emitTodo(): void {
     this.newTodo.emit(this.todoForm.value);

@@ -1,8 +1,15 @@
 <mat-card-header>
-    <mat-card-title-group>
-        <mat-card-title> {{todo?.title}} </mat-card-title>
-        <mat-card-subtitle> {{todo?.description}} </mat-card-subtitle>
-    <mat-checkbox color="primary"></mat-checkbox>
-    </mat-card-title-group>
-    
+  <mat-card-title-group>
+    @if (toStrike) {
+    <mat-card-title appStrikethrough>
+      {{ todo?.title }}
+    </mat-card-title>
+    } @else {
+    <mat-card-title>
+      {{ todo?.title }}
+    </mat-card-title>
+    }
+    <mat-card-subtitle> {{ todo?.description }} </mat-card-subtitle>
+    <mat-checkbox (change)="todoDone()" color="primary"></mat-checkbox>
+  </mat-card-title-group>
 </mat-card-header>

@@ -2,23 +2,29 @@
   <p>
     <mat-form-field>
       <mat-label>Title</mat-label>
-      <input matInput formControlName="title" />
-      @if (todoForm.controls['title'].errors?.['minlength']){
-      <mat-error>Title is too short</mat-error>} @else if
-      (todoForm.controls['title'].errors?.['required'] &&
-      (todoForm.controls['title'].dirty || todoForm.controls['title'].touched)){
-      <mat-error>Title is required</mat-error>}
+        <input matInput formControlName="title" />
+        @if (todoForm.controls['title'].errors?.['minlength'])
+        {
+          <mat-error>Title is too short</mat-error>
+        }
+        @else if
+        (todoForm.controls['title'].errors?.['required'] &&
+        (todoForm.controls['title'].dirty || todoForm.controls['title'].touched))
+        {
+          <mat-error>Title is required</mat-error>
+        }
     </mat-form-field>
   </p>
   <p>
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <input matInput formControlName="description" />
-      @if (todoForm.controls['description'].errors?.['maxlength'] &&
-      (todoForm.controls['description'].dirty ||
-      todoForm.controls['description'].touched)){
-      <mat-error>Too long</mat-error>
-      }
+        <input matInput formControlName="description" />
+        @if (todoForm.controls['description'].errors?.['maxlength'] &&
+        (todoForm.controls['description'].dirty ||
+        todoForm.controls['description'].touched))
+        {
+          <mat-error>Too long</mat-error>
+        }
     </mat-form-field>
   </p>
   <p>

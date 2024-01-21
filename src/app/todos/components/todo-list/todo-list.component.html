@@ -13,13 +13,17 @@
   }
 </div>
 
+@if(!isAdding)
+{
 <mat-card class="todoList">
   @for (todo of todoList; track $index) {
   <app-todo class="todoItem" [todo]="todo" (done)="doneTodo($event)"></app-todo>
   }
 </mat-card>
+}
 
-@if (isAdding) {
+@if (isAdding)
+{
 <app-todo-form (newTodo)="todoAdd($event)"></app-todo-form>
 }
 <app-add-button class="addTodo" (add)="isAdding = true"></app-add-button>

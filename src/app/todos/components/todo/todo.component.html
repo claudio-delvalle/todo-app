@@ -1,10 +1,12 @@
 <mat-card-header>
   <mat-card-title-group>
-    @if (todo?.complete) {
+    @if (todo?.complete) 
+    {
     <mat-card-title appStrikethrough>
       {{ todo?.title }}
     </mat-card-title>
-    } @else {
+    } @else 
+    {
     <mat-card-title>
       {{ todo?.title }}
     </mat-card-title>

@@ -12,8 +12,6 @@ import { StrikethroughDirective } from '../../../directives/strikethrough.direct
   styleUrl: './todo.component.css',
 })
 export class TodoComponent {
-  public toStrike = false;
-
   @Input()
   public todo?: Todo;
 
@@ -21,12 +19,13 @@ export class TodoComponent {
   public done: EventEmitter<Todo> = new EventEmitter();
 
   todoDone(): void {
-    if (this.todo?.complete === false) {
+    if (this.todo?.complete === false)
+    {
       this.todo.complete = true;
       this.done.emit(this.todo);
-      this.toStrike = true;
-    } else if (this.todo?.complete === true) {
-      this.toStrike = false;
+    }
+    else if (this.todo?.complete === true)
+    {
       this.todo.complete = false;
       this.done.emit(this.todo);
     }

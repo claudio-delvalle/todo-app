@@ -1,29 +1,25 @@
 <!-- TODO: Create Todo component -->
 <!-- TODO: Use mat-checkbox -->
 <div>
-    <!-- TODO: remove quotes -->
-    @if (todoList.length==0){
+  <!-- TODO: remove quotes -->
+  @if (todoList.length==0){
 
-        <h5 class="emptyTodos">Lista Vacia</h5>
-    }
+  <h5 class="emptyTodos">Lista Vacia</h5>
+  }
 </div>
 <div>
-    @if (error){
-        <h5 class="error">Ocurrio un error</h5>
-    }
+  @if (error){
+  <h5 class="error">Ocurrio un error</h5>
+  }
 </div>
 
 <mat-card class="todoList">
-    @for (todo of todoList; track $index) {
-    <app-todo class="todoItem"  [todo]="todo"  (done)="doneTodo($event)"></app-todo>
-    }
+  @for (todo of todoList; track $index) {
+  <app-todo class="todoItem" [todo]="todo" (done)="doneTodo($event)"></app-todo>
+  }
 </mat-card>
 
 @if (isAdding) {
-    <app-todo-form (newTodo)="todoAdd($event)" ></app-todo-form>
+<app-todo-form (newTodo)="todoAdd($event)"></app-todo-form>
 }
-<app-add-button (add)="isAdding = true"></app-add-button>
-
-
-
-
+<app-add-button class="addTodo" (add)="isAdding = true"></app-add-button>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TodoComponent } from '../todo/todo.component';
 
 import { MatCardModule } from '@angular/material/card';
@@ -23,7 +23,6 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './todo-list.component.css',
 })
 export class TodoListComponent implements OnInit {
-  @Input()
   todoList: Todo[] = [];
 
   isAdding = false;
@@ -34,6 +33,10 @@ export class TodoListComponent implements OnInit {
     this.verificarYManejarErrores(this.todoList);
   }
   ngOnInit(): void {
+    this.getTodos();
+  }
+
+  getTodos(): void {
     this.todoService.getTodos().subscribe((todos) => (this.todoList = todos));
   }
 
@@ -53,7 +56,10 @@ export class TodoListComponent implements OnInit {
       dueDate,
       complete: false,
     };
-    this.todoService.addTodo(todoSend).subscribe();
+    this.todoService
+      .addTodo(todoSend)
+      .subscribe((todo) => this.todoList.push(todo));
+    this.isAdding = false;
   }
 
   verificarYManejarErrores(lista: unknown[]): void {

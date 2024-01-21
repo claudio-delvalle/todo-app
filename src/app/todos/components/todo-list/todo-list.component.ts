@@ -38,7 +38,7 @@ export class TodoListComponent implements OnInit {
   }
 
   doneTodo(todo: Todo): void {
-    this.todoService.updateTodo(todo);
+    this.todoService.updateTodo(todo).subscribe();
   }
 
   todoAdd(todoDetails: {
@@ -54,17 +54,7 @@ export class TodoListComponent implements OnInit {
       complete: false,
     };
     this.todoService.addTodo(todoSend).subscribe();
-    console.log(todoSend);
-    console.log('De aqui le manda al service');
   }
-
-  // newTodo(todoDetails: {
-  //   title: string;
-  //   description: string;
-  //   dueDate?: Date;
-  // }): void {
-  //   this.todoService.newTodo(todoDetails);
-  // }
 
   verificarYManejarErrores(lista: unknown[]): void {
     try {

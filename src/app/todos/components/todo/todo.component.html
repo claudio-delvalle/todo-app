@@ -1,6 +1,6 @@
 <mat-card-header>
   <mat-card-title-group>
-    @if (toStrike) {
+    @if (todo?.complete) {
     <mat-card-title appStrikethrough>
       {{ todo?.title }}
     </mat-card-title>

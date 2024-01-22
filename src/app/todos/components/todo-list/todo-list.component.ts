@@ -8,6 +8,8 @@ import { TodoFormComponent } from '../todo-form/todo-form.component';
 
 import { TodoService } from '../../services/todo.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo-list',
@@ -18,12 +20,14 @@ import { HttpClientModule } from '@angular/common/http';
     AddButtonComponent,
     TodoFormComponent,
     HttpClientModule,
+    CommonModule,
   ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
 })
 export class TodoListComponent implements OnInit {
   todoList: Todo[] = [];
+  todos$: Observable<Todo[]>;
 
   isAdding = false;
 
@@ -31,7 +35,9 @@ export class TodoListComponent implements OnInit {
 
   constructor(private todoService: TodoService) {
     this.verificarYManejarErrores(this.todoList);
+    this.todos$ = this.todoService.getTodos();
   }
+
   ngOnInit(): void {
     this.getTodos();
   }
@@ -58,7 +64,7 @@ export class TodoListComponent implements OnInit {
     };
     this.todoService
       .addTodo(todoSend)
-      .subscribe((todo) => this.todoList.push(todo));
+      .subscribe((todo) => this.todoList.push(todo)); // TODO: Avoid updating property with result
     this.isAdding = false;
   }
 

@@ -1,29 +1,24 @@
-<!-- TODO: Create Todo component -->
-<!-- TODO: Use mat-checkbox -->
+<!-- TODO: Replace todoList with todos$ -->
+<!-- TODO: Find a way to use only one 'async' pipe for all other uses of 'todos$' -->
 <div>
-  <!-- TODO: remove quotes -->
-  @if (todoList.length==0){
+  @if (todoList.length==0) {
 
   <h5 class="emptyTodos">Lista Vacia</h5>
   }
 </div>
 <div>
-  @if (error){
+  @if (error) {
   <h5 class="error">Ocurrio un error</h5>
   }
 </div>
 
-@if(!isAdding)
-{
+@if(!isAdding) {
 <mat-card class="todoList">
-  @for (todo of todoList; track $index) {
+  @for (todo of todos$ | async; track $index) {
   <app-todo class="todoItem" [todo]="todo" (done)="doneTodo($event)"></app-todo>
   }
 </mat-card>
-}
-
-@if (isAdding)
-{
+} @if (isAdding) {
 <app-todo-form (newTodo)="todoAdd($event)"></app-todo-form>
 }
 <app-add-button class="addTodo" (add)="isAdding = true"></app-add-button>

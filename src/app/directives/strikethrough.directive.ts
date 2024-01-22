@@ -5,8 +5,8 @@ import { Directive, HostBinding } from '@angular/core';
   standalone: true,
 })
 export class StrikethroughDirective {
-  constructor() {}
 
+  // TODO: Modify HTML/CSS from here
   @HostBinding('class.strikedtrough')
   get cssClasses() {
     return true;

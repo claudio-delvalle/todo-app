@@ -11,10 +11,10 @@
   <h5 class="error">Ocurrio un error</h5>
   }
 </div>
-
+<!-- @for (todo of todos$ | async; track $index) -->
 @if(!isAdding) {
 <mat-card class="todoList">
-  @for (todo of todos$ | async; track $index) {
+  @for (todo of todoList; track $index) {
   <app-todo class="todoItem" [todo]="todo" (done)="doneTodo($event)"></app-todo>
   }
 </mat-card>

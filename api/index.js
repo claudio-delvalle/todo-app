@@ -3,94 +3,135 @@ import fs from "fs";
 import bodyParser from "body-parser";
 import { v4 as uuid } from "uuid";
 
-// TODO: Add API tests
+import http from "http";
+import * as socketIO from "socket.io";
+import mongoose from "mongoose";
+
+//Me conecto a MongoDB
+mongoose.connect("mongodb://localhost:27017/todo-app", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+//Creo la aplicacion express
 const app = express();
+//Creo un servidor http a partir de la aplicacion de express
+const server = http.createServer(app);
+//Creo un servidor Socket.IO a partir del servidor http
+const io = new socketIO.Server(server);
+const PORT = 3000;
+
+//Inicio el servidor
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+// app.listen(3000, () => {
+//   console.log("Server listening in port 3000");
+// });
+
+//Importo el modelo del TodoBd
+
+import { TodoBd } from "./models/todo.js";
+
+//escucho las conexiones de los clientes
+
+io.on("connection", (socket) => {
+  console.log("User connected", socket.id);
+});
+
+//BodyParser para parsear el cuerpo de las peticiones
+app.use(bodyParser.json());
+
+// TODO: Add API tests
+
 // TODO: Install/Use CORS pakcage
 // https://expressjs.com/en/resources/middleware/cors.html
 
 // TODO: Implement real DB (Postgress, MongoDB, Subabase, etc.)
-app.use(bodyParser.json());
 
 // TODO: Isolate into dbService
-const readData = () => {
-  try {
-    const data = fs.readFileSync("./todoDb.json");
-    return JSON.parse(data);
-  } catch {
-    console.log(error);
-  }
-};
-// TODO: Isolate into dbService
-const writeData = (data) => {
-  try {
-    fs.writeFileSync("./todoDb.json", JSON.stringify(data));
-  } catch {
-    console.log(error);
-  }
-};
-
+// const readData = () => {
+//   try {
+//     const data = fs.readFileSync("./todoDb.json");
+//     return JSON.parse(data);
+//   } catch {
+//     console.log(error);
+//   }
+// };
+// // TODO: Isolate into dbService
+// const writeData = (data) => {
+//   try {
+//     fs.writeFileSync("./todoDb.json", JSON.stringify(data));
+//   } catch {
+//     console.log(error);
+//   }
+// };
+//Metodo get en ruta vacia
 app.get("/", (req, res) => {
   res.send("API Todos CRUD");
 });
-
+//Metodo get para obterner los todo de la bd
 app.get("/todos", (req, res) => {
-  const data = readData();
-  res.json(data.Todos);
+  console.log("PIde todos");
+  TodoBd.find()
+    .then((todosBd) => {
+      res.json(todosBd);
+    })
+    .catch((err) => {
+      console.error("Error getting todos from database: ", err);
+      res.status(500).send();
+    });
 });
 
+//Metodo Get para obtener todos por id
 app.get("/todos/:id", (req, res) => {
-  const data = readData();
-  const id = parseInt(req.params.id);
-  const todo = data.Todos.find((todo) => todo.id === id);
-  res.json(todo);
+  TodoBd.findById(req.params.id)
+    .then((todoBd) => {
+      res.json(todoBd);
+    })
+    .catch((err) => {
+      console.log("Error getting todo by id from database: ", err);
+      res.status(500).send();
+    });
 });
 
+//Metodo Post para crear el todo y emitir el evento para su transmision
 app.post("/todos", (req, res) => {
-  const data = readData();
-  const body = req.body;
-  if (body.dueDate) {
-    const date = new Date(body.dueDate);
-    body.dueDate = date.toISOString().slice(0, 10);
-  }
-  const newTodo = {
+  const newTodoBd = new TodoBd({
     id: uuid(),
-    ...body,
-  };
-  data.Todos.push(newTodo);
-  writeData(data);
-  res.json(newTodo);
+    ...req.body,
+  });
+  newTodoBd
+    .save()
+    .then(() => {
+      io.emit("new todo", newTodoBd);
+      res.status(200).send();
+    })
+    .catch((err) => {
+      console.error("Error saving new todo on database", err);
+      res.status(500).send();
+    });
 });
 
+//Metodo put para actualizar un todo
 app.put("/todos/:id", (req, res) => {
-  const data = readData();
-  const body = req.body;
-  const id = req.params.id;
-  const todoIndex = data.Todos.findIndex((todo) => todo.id === id);
-  if (todoIndex !== -1) {
-    data.Todos[todoIndex] = {
-      ...data.Todos[todoIndex],
-      ...body,
-    };
-    writeData(data);
-    res.json({ message: "Todo updated succesfully" });
-  } else {
-    res.json({ message: "Todo not found" });
-  }
+  TodoBd.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      res.status(200).send();
+    })
+    .catch((err) => {
+      console.log("Error updating todo in database: ", err);
+      res.status(500).send();
+    });
 });
 
+//Metodo delete para eliminar un todo
 app.delete("/todos/:id", (req, res) => {
-  const data = readData();
-  const id = parseInt(req.params.id).toString();
-  const todoIndex = data.Todos.findIndex((todo) => todo.id === id);
-  if (todoIndex !== -1) {
-    data.Todos.splice(todoIndex, 1);
-    writeData(data);
-    res.json({ message: "Todo deleted" });
-  } else {
-    res.json({ message: "Todo not found" });
-  }
-});
-
-app.listen(3000, () => {
-  console.log("Server listening in port 3000");
+  TodoBd.findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.status(200).send();
+    })
+    .catch((error) => {
+      console.error("Error deleting todo from database: ", err);
+      res.status(500).send();
+    });
 });

@@ -1,0 +1,33 @@
+GET http://localhost:3000/todos HTTP/1.1
+
+###
+
+GET http://localhost:3000/todos/1 HTTP/1.1
+
+###
+
+POST http://localhost:3000/todos HTTP/1.1
+Content-type: application/json
+
+{
+    "title":"Desayunar",
+    "description": "Es importante!",
+    "dueDate": "10/10/2024",
+    "complete": false
+}
+
+###
+
+PUT http://localhost:3000/todos/5 HTTP/1.1
+Content-type: application/json
+
+{
+    "title":"Desayunar",
+    "description": "Es muy importante!",
+    "dueDate": "11-10-24",
+    "complete": false
+}
+
+###
+
+DELETE http://localhost:3000/todos/44563 HTTP/1.1

@@ -4,7 +4,7 @@ import { Todo } from '../../interfaces/todo.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environments } from '../../../../environments/environments';
-import { SocketService } from '../socket/SocketService.service';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +12,11 @@ import { SocketService } from '../socket/SocketService.service';
 export class TodoService {
   private baseUrl: string = environments.baseUrl;
 
-  constructor(private http: HttpClient, private socketService: SocketService) {}
+  constructor(private http: HttpClient) {}
 
-  // getLiveTodo() {
-  //   return this.socketService.fromEvent('new todo');
-  // }
+  getLiveTodo(socketService: Socket) {
+    return socketService.fromEvent('new todo');
+  }
 
   getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${this.baseUrl}/todos`);
@@ -27,8 +27,8 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo): Observable<Todo> {
-    if (!todo.id) throw Error('Hero id is required');
-    return this.http.put<Todo>(`${this.baseUrl}/todos/${todo.id}`, todo);
+    if (!todo._id) throw Error('Hero id is required');
+    return this.http.put<Todo>(`${this.baseUrl}/todos/${todo._id}`, todo);
   }
 
   deleteTodoById(id: string): Observable<boolean> {

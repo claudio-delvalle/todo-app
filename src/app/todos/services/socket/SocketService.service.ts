@@ -6,8 +6,14 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @Injectable({
   providedIn: 'root',
 })
-export class SocketService extends Socket {
-  constructor() {
-    super(config);
+export class SocketService {
+  private socket!: Socket;
+
+  initSocket() {
+    if (!this.socket) {
+      this.socket = new Socket(config);
+    }
+    return this.socket;
   }
+
 }

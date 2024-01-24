@@ -1,5 +1,4 @@
 import express from "express";
-import fs from "fs";
 import bodyParser from "body-parser";
 import { v4 as uuid } from "uuid";
 
@@ -11,6 +10,10 @@ import mongoose from "mongoose";
 mongoose.connect("mongodb://localhost:27017/todo-app", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error("Error en la conexion a MOngoDB", err.message);
 });
 //Creo la aplicacion express
 const app = express();
@@ -71,10 +74,9 @@ app.get("/", (req, res) => {
 });
 //Metodo get para obterner los todo de la bd
 app.get("/todos", (req, res) => {
-  console.log("PIde todos");
   TodoBd.find()
     .then((todosBd) => {
-      res.json(todosBd);
+      res.json(todosBd); console.log(todosBd);
     })
     .catch((err) => {
       console.error("Error getting todos from database: ", err);
@@ -97,7 +99,7 @@ app.get("/todos/:id", (req, res) => {
 //Metodo Post para crear el todo y emitir el evento para su transmision
 app.post("/todos", (req, res) => {
   const newTodoBd = new TodoBd({
-    id: uuid(),
+    _id: uuid(),
     ...req.body,
   });
   newTodoBd

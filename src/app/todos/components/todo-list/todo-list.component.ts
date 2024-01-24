@@ -9,7 +9,8 @@ import { TodoFormComponent } from '../todo-form/todo-form.component';
 import { TodoService } from '../../services/todo/todo.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-// import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { SocketService } from '../../services/socket/SocketService.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -27,27 +28,39 @@ import { CommonModule } from '@angular/common';
 })
 export class TodoListComponent implements OnInit {
   todoList: Todo[] = [];
-  // todos$: Observable<Todo[]>;
+  todos$: Observable<Todo[]>;
 
   isAdding = false;
 
   error = false;
 
-  constructor(private todoService: TodoService) {
+  constructor(
+    private todoService: TodoService,
+    private socketService: SocketService
+  ) {
     this.verificarYManejarErrores(this.todoList);
-    // this.todoService.getLiveTodo().subscribe((value: unknown) => {
-    //   const liveTodo = value as Todo;
-    //   this.todoList.push(liveTodo);
-    // });
-    // this.todos$ = this.todoService.getTodos();
+
+    this.todos$ = this.todoService.getTodos();
   }
 
   ngOnInit(): void {
     this.getTodos();
   }
 
+  AfterViewInit(): void {
+    const socket = this.socketService.initSocket();
+    this.todoService.getLiveTodo(socket).subscribe((value: unknown) => {
+      const liveTodo = value as Todo;
+      this.todoList.push(liveTodo);
+    });
+  }
+
   getTodos(): void {
-    this.todoService.getTodos().subscribe((todos) => (this.todoList = todos));
+    this.todoService.getTodos().subscribe((todos) => {
+      console.log('Todos del servidor: ', todos);
+      this.todoList = todos;
+      console.log('lista de todos en el front:', this.todoList);
+    });
   }
 
   doneTodo(todo: Todo): void {

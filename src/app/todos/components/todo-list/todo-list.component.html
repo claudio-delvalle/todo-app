@@ -14,7 +14,7 @@
 <!-- @for (todo of todos$ | async; track $index) -->
 @if(!isAdding) {
 <mat-card class="todoList">
-  @for (todo of todoList; track $index) {
+  @for (todo of todos$ | async; track $index) {
   <app-todo class="todoItem" [todo]="todo" (done)="doneTodo($event)"></app-todo>
   }
 </mat-card>

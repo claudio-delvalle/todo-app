@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TodoComponent } from '../todo/todo.component';
 
 import { MatCardModule } from '@angular/material/card';
@@ -30,7 +25,6 @@ import { SocketService } from '../../services/socket/SocketService.service';
   ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListComponent implements OnInit {
   todos$: Observable<Todo[]> = this.todoService.getTodos();
@@ -41,13 +35,12 @@ export class TodoListComponent implements OnInit {
 
   constructor(
     private todoService: TodoService,
-    private socketService: SocketService,
-    private cd: ChangeDetectorRef
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
     this.todos$.subscribe((todos) => {
-      this.verificarYManejarErrores(todos);
+      if (todos.length > 0) this.verificarYManejarErrores(todos);
     });
   }
 
@@ -82,7 +75,9 @@ export class TodoListComponent implements OnInit {
     };
     this.todoService.addTodo(todoSend).subscribe((todo) => console.log(todo)); // TODO: Avoid updating property with result
     this.isAdding = false;
-
+    this.todos$.subscribe((todos) => {
+      if (todos.length > 0) this.verificarYManejarErrores(todos);
+    });
   }
 
   verificarYManejarErrores(lista: unknown[]): void {

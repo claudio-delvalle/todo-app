@@ -1,14 +1,26 @@
 import { Directive, HostBinding } from '@angular/core';
+//import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Directive({
   selector: '[appStrikethrough]',
   standalone: true,
 })
 export class StrikethroughDirective {
+  // TODO: Modify HTML/CSS from here  DONE
 
-  // TODO: Modify HTML/CSS from here
-  @HostBinding('class.strikedtrough')
-  get cssClasses() {
-    return true;
-  }
+  @HostBinding('style.textDecorationLine') textDecorationLine = 'line-through';
+  @HostBinding('style.fontWeight') fontWeight = 'bold';
+  @HostBinding('style.fontSize') fontSize = 'large';
+
+  // Preguntar a claudio sobre el safestyle y el sanitizer
+  // @HostBinding('style') style: SafeStyle;
+  // constructor(sanitizer: DomSanitizer) {
+  //   this.style = sanitizer.bypassSecurityTrustStyle(
+  //     'text-decoration-line: line-through; font-weight: bold; font-size: large;'
+  //   );
+  // }
 }
+
+//  text-decoration-line: line-through;
+// font-weight: bold;
+// font-size: large;

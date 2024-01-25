@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import http from "http";
 import * as socketIO from "socket.io";
 import mongoose from "mongoose";
+import cors from "cors";
 
 //Me conecto a MongoDB
 mongoose.connect("mongodb://localhost:27017/todo-app", {
@@ -36,7 +37,7 @@ io.on("connection", (socket) => {
 });
 
 //BodyParser para parsear el cuerpo de las peticiones
-app.use(bodyParser.json());
+app.use(cors(), bodyParser.json());
 
 // TODO: Add API tests
 
@@ -44,7 +45,6 @@ app.use(bodyParser.json());
 // https://expressjs.com/en/resources/middleware/cors.html
 
 // TODO: Implement real DB (Postgress, MongoDB, Subabase, etc.) DONE
-
 
 //Metodo get en ruta vacia
 app.get("/", (req, res) => {
@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
 app.get("/todos", (req, res) => {
   TodoBd.find()
     .then((todosBd) => {
-      res.json(todosBd); console.log(todosBd);
+      res.json(todosBd);
     })
     .catch((err) => {
       console.error("Error getting todos from database: ", err);
@@ -115,3 +115,4 @@ app.delete("/todos/:id", (req, res) => {
       res.status(500).send();
     });
 });
+export default server;

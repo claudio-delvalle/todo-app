@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { TodoComponent } from '../todo/todo.component';
 
 import { MatCardModule } from '@angular/material/card';
@@ -25,10 +30,10 @@ import { SocketService } from '../../services/socket/SocketService.service';
   ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListComponent implements OnInit {
-  todoList: Todo[] = [];
-  todos$: Observable<Todo[]>;
+  todos$: Observable<Todo[]> = this.todoService.getTodos();
 
   isAdding = false;
 
@@ -36,31 +41,27 @@ export class TodoListComponent implements OnInit {
 
   constructor(
     private todoService: TodoService,
-    private socketService: SocketService
-  ) {
-    this.verificarYManejarErrores(this.todoList);
-
-    this.todos$ = this.todoService.getTodos();
-  }
+    private socketService: SocketService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.getTodos();
+    this.todos$.subscribe((todos) => {
+      this.verificarYManejarErrores(todos);
+    });
   }
 
   AfterViewInit(): void {
     const socket = this.socketService.initSocket();
     this.todoService.getLiveTodo(socket).subscribe((value: unknown) => {
       const liveTodo = value as Todo;
-      this.todoList.push(liveTodo);
+      this.todoService.addTodo(liveTodo);
+      this.todos$ = this.todoService.getTodos();
     });
   }
 
   getTodos(): void {
-    this.todoService.getTodos().subscribe((todos) => {
-      console.log('Todos del servidor: ', todos);
-      this.todoList = todos;
-      console.log('lista de todos en el front:', this.todoList);
-    });
+    this.todos$ = this.todoService.getTodos();
   }
 
   doneTodo(todo: Todo): void {
@@ -81,6 +82,7 @@ export class TodoListComponent implements OnInit {
     };
     this.todoService.addTodo(todoSend).subscribe((todo) => console.log(todo)); // TODO: Avoid updating property with result
     this.isAdding = false;
+
   }
 
   verificarYManejarErrores(lista: unknown[]): void {

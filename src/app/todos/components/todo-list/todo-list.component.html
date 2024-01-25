@@ -1,24 +1,27 @@
-<!-- TODO: Replace todoList with todos$ -->
-<!-- TODO: Find a way to use only one 'async' pipe for all other uses of 'todos$' -->
-<div>
-  @if (todoList.length==0) {
+<!-- TODO: Replace todoList with todos$ DONE -->
+<!-- TODO: Find a way to use only one 'async' pipe for all other uses of 'todos$' DONE-->
 
-  <h5 class="emptyTodos">Lista Vacia</h5>
+<div>
+  @if(!isAdding) {
+  <mat-card class="todoList">
+    @if(todos$ |async; as todos){ @for (todo of todos; track $index) {
+    <app-todo
+      class="todoItem"
+      [todo]="todo"
+      (done)="doneTodo($event)"
+    ></app-todo>
+    }@empty {
+    <li class="emptyTodos">Sin Todos Pendientes</li>
+    }}
+  </mat-card>
+  } @if (isAdding) {
+  <app-todo-form (newTodo)="todoAdd($event)"></app-todo-form>
   }
+  <app-add-button class="addTodo" (add)="isAdding = true"></app-add-button>
 </div>
+
 <div>
   @if (error) {
   <h5 class="error">Ocurrio un error</h5>
   }
 </div>
-<!-- @for (todo of todos$ | async; track $index) -->
-@if(!isAdding) {
-<mat-card class="todoList">
-  @for (todo of todos$ | async; track $index) {
-  <app-todo class="todoItem" [todo]="todo" (done)="doneTodo($event)"></app-todo>
-  }
-</mat-card>
-} @if (isAdding) {
-<app-todo-form (newTodo)="todoAdd($event)"></app-todo-form>
-}
-<app-add-button class="addTodo" (add)="isAdding = true"></app-add-button>

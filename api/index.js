@@ -1,7 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { v4 as uuid } from "uuid";
-
 import http from "http";
 import * as socketIO from "socket.io";
 import mongoose from "mongoose";
@@ -27,16 +26,11 @@ const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-// app.listen(3000, () => {
-//   console.log("Server listening in port 3000");
-// });
 
 //Importo el modelo del TodoBd
-
 import { TodoBd } from "./models/todo.js";
 
 //escucho las conexiones de los clientes
-
 io.on("connection", (socket) => {
   console.log("User connected", socket.id);
 });
@@ -49,25 +43,9 @@ app.use(bodyParser.json());
 // TODO: Install/Use CORS pakcage
 // https://expressjs.com/en/resources/middleware/cors.html
 
-// TODO: Implement real DB (Postgress, MongoDB, Subabase, etc.)
+// TODO: Implement real DB (Postgress, MongoDB, Subabase, etc.) DONE
 
-// TODO: Isolate into dbService
-// const readData = () => {
-//   try {
-//     const data = fs.readFileSync("./todoDb.json");
-//     return JSON.parse(data);
-//   } catch {
-//     console.log(error);
-//   }
-// };
-// // TODO: Isolate into dbService
-// const writeData = (data) => {
-//   try {
-//     fs.writeFileSync("./todoDb.json", JSON.stringify(data));
-//   } catch {
-//     console.log(error);
-//   }
-// };
+
 //Metodo get en ruta vacia
 app.get("/", (req, res) => {
   res.send("API Todos CRUD");

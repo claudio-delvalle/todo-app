@@ -66,7 +66,11 @@ app.get("/todos", (req, res) => {
 app.get("/todos/:id", (req, res) => {
   TodoBd.findById(req.params.id)
     .then((todoBd) => {
-      res.json(todoBd);
+      if (todoBd == null) {
+        res.status(500).send();
+      } else {
+        res.json(todoBd);
+      }
     })
     .catch((err) => {
       console.log("Error getting todo by id from database: ", err);
@@ -74,7 +78,7 @@ app.get("/todos/:id", (req, res) => {
     });
 });
 
-//Metodo Post para crear el todo y emitir el evento para su transmision
+//Metodo Post para crear el todo y emitir el evento para su transmision,deberia tener validacines de que el body trae datos correctos para no almacenar basura en la BD
 app.post("/todos", (req, res) => {
   const newTodoBd = new TodoBd({
     _id: uuid(),

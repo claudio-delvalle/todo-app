@@ -13,6 +13,7 @@ export class StrikethroughDirective {
   @HostBinding('style.fontSize') fontSize = 'large';
 
   // Preguntar a claudio sobre el safestyle y el sanitizer
+  //https://angular.io/api/core/Renderer2#setAttribute
   // @HostBinding('style') style: SafeStyle;
   // constructor(sanitizer: DomSanitizer) {
   //   this.style = sanitizer.bypassSecurityTrustStyle(

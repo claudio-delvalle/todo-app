@@ -5,7 +5,11 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TodoService } from './todos/services/todo/todo.service';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withFetch,
+} from '@angular/common/http';
 //import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './todos/services/socket/SocketService.service';
 
@@ -19,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     TodoService,
     SocketService,
     importProvidersFrom(HttpClientModule),
+    provideHttpClient(withFetch()),
     // importProvidersFrom(SocketIoModule.forRoot(config)),
   ],
 };

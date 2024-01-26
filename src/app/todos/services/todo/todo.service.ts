@@ -27,7 +27,7 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo): Observable<Todo> {
-    if (!todo._id) throw Error('Hero id is required');
+    if (!todo._id) throw Error('Todo id is required');
     return this.http.put<Todo>(`${this.baseUrl}/todos/${todo._id}`, todo);
   }
 

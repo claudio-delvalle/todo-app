@@ -11,17 +11,32 @@
       (done)="doneTodo($event)"
     ></app-todo>
     }@empty {
-    <li class="emptyTodos">Sin Todos Pendientes</li>
+    <li>
+      <mat-card class="emptyTodos"
+        ><mat-card-title>Sin todos Pendientes</mat-card-title>
+        <mat-card-content
+          ><img
+            mat-card-md-image
+            src="https://i.pinimg.com/originals/e7/75/0a/e7750ad1a9ff8db99c8ff8bb63b1d1b3.png"
+            alt="Relax"
+        /></mat-card-content>
+      </mat-card>
+    </li>
     }}
   </mat-card>
-  } @if (isAdding) {
+  } @if (isAdding && !isLoading) {
   <app-todo-form (newTodo)="todoAdd($event)"></app-todo-form>
   }
   <app-add-button class="addTodo" (add)="isAdding = true"></app-add-button>
 </div>
 
 <div>
-  @if (error) {
+  @if (isLoading && isAdding){
+  <app-loading class="loading"></app-loading>
+  }
+</div>
+<div>
+  @if (error && !isAdding && !isLoading) {
   <h5 class="error">Ocurrio un error</h5>
   }
 </div>

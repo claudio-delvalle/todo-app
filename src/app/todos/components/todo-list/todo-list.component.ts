@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { SocketService } from '../../services/socket/SocketService.service';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -22,6 +23,7 @@ import { SocketService } from '../../services/socket/SocketService.service';
     TodoFormComponent,
     HttpClientModule,
     CommonModule,
+    LoadingComponent,
   ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
@@ -30,7 +32,7 @@ export class TodoListComponent implements OnInit {
   todos$: Observable<Todo[]> = this.todoService.getTodos();
 
   isAdding = false;
-
+  isLoading = false;
   error = false;
 
   constructor(
@@ -73,8 +75,15 @@ export class TodoListComponent implements OnInit {
       dueDate,
       complete: false,
     };
-    this.todoService.addTodo(todoSend).subscribe((todo) => console.log(todo)); // TODO: Avoid updating property with result
-    this.isAdding = false;
+    this.todoService.addTodo(todoSend).subscribe((todo) => console.log(todo));
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isAdding = false;
+      this.isLoading = false;
+    }, 2500);
+
+    // TODO: Avoid updating property with result
+
     this.todos$.subscribe((todos) => {
       if (todos.length > 0) this.verificarYManejarErrores(todos);
     });

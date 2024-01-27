@@ -8,6 +8,7 @@ import { Validators } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-todo-form',
@@ -19,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './todo-form.component.html',
   styleUrl: './todo-form.component.css',
@@ -42,22 +44,19 @@ export class TodoFormComponent {
 
   // TODO: Add inline mat-errors when validation errors occur DONE
   constructor() {
-    this.todoForm = new FormGroup(
-      {
+    this.todoForm = new FormGroup({
       title: new FormControl('', [
         Validators.minLength(5),
         Validators.required,
       ]),
       description: new FormControl('', Validators.maxLength(20)),
       dueDate: new FormControl(''), // TODO: Make type 'Date' (use DatePicker) DONE
-      }
-    );
+    });
     this.todoForm.valueChanges.subscribe((values) => console.log(values));
   }
 
-  emitTodo(): void
-  {
+  emitTodo(): void {
     this.newTodo.emit(this.todoForm.value);
-    this.todoForm.reset();    
+    this.todoForm.reset();
   }
 }

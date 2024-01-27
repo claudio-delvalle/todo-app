@@ -1,0 +1,23 @@
+.titulo {
+  /* position: absolute; */
+  text-align: center;
+  width: 100vw;
+  height: 10vh;
+  margin-top: 0;
+  background-color: #3f51b5;
+}
+
+.titulo h1 {
+  font-size: 30px;
+  font-family: "Shift", sans-serif;
+  font-weight: bold;
+  padding-top: 3vh;
+}
+
+.todoList {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

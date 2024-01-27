@@ -56,22 +56,68 @@ The template of this component uses Angular material to render the todos by pass
 
 ## Interfaces
 
-At this moment the app only uses one interface to model the __Todo__ data type.
+At this moment the app only uses one interface to model the **Todo** data type.
 
-- __todo interface:__ This class is exported to be used as a model of the data that a todo needs.
-    - _id: This attribute gives the Todo a unique identifier. Uses String data type.
-    - title: This attribute refers to the title of the todo. Uses String data type.
-    - description: This attribute refers to the title of the todo. Uses String data type.
-    - dueDate: This attribute refers to the date that the todo expires. Uses Date data type.
-    - complete: This attribute refers to the state of  completion of the todo. Uses Boolean data type.
+- **todo interface:** This class is exported to be used as a model of the data that a todo needs.
+  - \_id: This attribute gives the Todo a unique identifier. Uses String data type.
+  - title: This attribute refers to the title of the todo. Uses String data type.
+  - description: This attribute refers to the title of the todo. Uses String data type.
+  - dueDate: This attribute refers to the date that the todo expires. Uses Date data type.
+  - complete: This attribute refers to the state of completion of the todo. Uses Boolean data type.
 
 ## Services
 
 Services are being used to manipulate the data flow from the API to the App and vice versa.
 
-- __Socket Service:__ 
-    - Variables:
-        - config: Gives to the implementation the url to listen the data from the API, uses SocketIoConfig data type.
-        - socket: Creates a instance of Socket.
-    - Methods:
-        - initSocket: This method uses a 
+- **Socket Service:**
+
+  - Variables:
+    - config: Gives to the implementation the url to listen the data from the API, uses SocketIoConfig data type.
+    - socket: Creates a instance of Socket.
+  - Methods:
+    - initSocket: This method uses a if conditional to ask if there is already a socket instance to create a new one if neccesary.
+
+- **Todo Service:**
+  - Variables:
+    - baseUrl: This variable provides the service a custom url depending the moment, if it's in production nor in development.
+  - Methods:
+    - constructor: This method injects to the service al the methods of the http library order to have the tools to connect to remote or local data bases.
+    - getLiveTodo: This method uses the socketService to detect a event (new todo) and then to show it in the template.
+    - getTodos: This method uses the http library already injected to connect to the data base and get an array of todos from the url passed as parameter using the _get_ method. This method return the array as an Observable.
+    - addTodo: This method recieves a Todo and uses the POST method to send it to the data base to be added.
+    - updateTodo:This method recieves a Todo and uses the PUT method to send it to the data base to be updated using its \_id property.
+    - deleteTodoById: This method recieves a Todo id and uses the DELETE method to send it to the data base to be deleted.
+
+## Directives
+
+This App uses only one custom directive to modify the styles of a marked as done todo.
+
+- __Strike Through:__ This directive uses the @HostBinding decorator wich creates a bridge between the tag and the implementation of the directive. Specifically this directive changes the text decoration, font Weight and font size attributes of the host's style.
+
+## Api
+
+For serving the app with data, I implemented a Node JS API using the framework Express, Mongo DB as data base and Mongoose as middleware.
+
+- __Variables:__
+    - app: Instance of express library
+    - server: Creates a http server using the app as base.
+    - io: Creates a socket server using the server as base.
+    - PORT: Defines the port that the app will be listening.
+
+- __Methods:__
+    - mongoose.connect: Generates the conexion between the API and Mongo DB 
+    - mongoose.connection.on: Event listener to react in case of Error, Connections.. events.
+    - server.listen: Starts the server.
+    - io.on: Socket server event listener to react in case of different types of events.
+    - app.use: Gives to the app orders to execute while serving.
+    - app.get: This method reacts on the route by requiring or responsing data, in this implementations is used to send data to the application.
+    - app.post: This method reacts on the route recieved and process the data to add it to the data base.
+    - app.put: This method reacts on the route recieved and process the data to update the Todo in the data base.
+    - app.delete: This method recieve an ID to search it in the data base and delete the Todo asociated to it.
+- __Models:__ In order to communicate more efficiently with the data base, the Api uses the todo model to compare and verify the data exchange.
+- __Tests:__ To check the functionality of the end points I created unit tests that simulates data exchange using the Api Methods.
+
+
+
+
+

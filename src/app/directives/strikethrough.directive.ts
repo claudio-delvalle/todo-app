@@ -10,7 +10,7 @@ export class StrikethroughDirective {
 
   @HostBinding('style.textDecorationLine') textDecorationLine = 'line-through';
   @HostBinding('style.fontWeight') fontWeight = 'bold';
-  @HostBinding('style.fontSize') fontSize = 'large';
+  @HostBinding('style.fontSize') fontSize = '1vw';
 
   // Preguntar a claudio sobre el safestyle y el sanitizer
   //https://angular.io/api/core/Renderer2#setAttribute

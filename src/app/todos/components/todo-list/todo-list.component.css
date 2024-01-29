@@ -7,8 +7,8 @@ body {
 }
 
 .emptyTodos {
-  height: 20vh;
-  width: 100vw;
+  height: auto;
+  width: auto;
   text-align: center;
   padding-top: 5%;
 }
@@ -17,12 +17,11 @@ body {
   margin: 10px;
 }
 
-
 .todoList {
   margin-bottom: 5%;
   width: 100vw;
-  max-height: 700px;
-  overflow-y: scroll;
+  max-height: 75vh;
+  overflow-y: auto;
 }
 
 .addTodo {

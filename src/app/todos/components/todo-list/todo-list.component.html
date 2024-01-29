@@ -1,7 +1,7 @@
 <!-- TODO: Replace todoList with todos$ DONE -->
 <!-- TODO: Find a way to use only one 'async' pipe for all other uses of 'todos$' DONE-->
 
-<div>
+<div class="listContainer">
   @if(!isAdding) {
   <mat-card class="todoList">
     @if(todos$ |async; as todos){ @for (todo of todos; track $index) {

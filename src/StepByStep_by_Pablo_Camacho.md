@@ -14,11 +14,17 @@ The design of the App UI was made using Figma, where I added all the features I 
 
 ## Basic components
 
-After that, I created the todo-list component using the CLI with the command 'ng generate component todo-list'. Here, I had my first attempt to unit testing. I was told that it is a good practice to write the tests before the implementation of the class component (test-driven-development [TDD]). My approach consisted of checking whether the component displayed the todos. The unit test consisted of adding a fake todo (mock data) to the list in the component (property) and verifying if the template rendered it by querying the DOM for the elements via the class selector. Furthermore, the tests verified the template's behavior of rendering the empty and error states. This first approach scared me because I thought it was very difficult.
+After that, I created the todo-list component using the CLI with the command 'ng generate component todo-list'. Here, I had my first attempt to unit testing using the Test Driven Development methodology wich consists in first create a failing unit test, then create the minimun code to satisfy that requirement. My approach consisted of checking whether the component displayed the todos. The unit test consisted of adding a mock data to the list in the component (property) and verifying if the template rendered it by querying the DOM for the elements via the class selector. Furthermore, the tests verified the template's behavior of rendering the empty and error states. This first approach scared me because I thought it was very difficult.
 
 ## Clean Code
 
-The next step was to update the GitHub Actions workflow to test the application as part of the CI/CD process. This involved configuring Angular (TODO: add how) to run the tests using a headless chrome browser. Also, I had to configure VSCode to auto-format on save, and added a git hook with Husky to automate the linting process before each commit.
+The next step was to update the GitHub Actions workflow to test the application as part of the CI/CD process. This involved configuring Angular (TODO: add how) creating scripts in the package.json to excute tasks remotely in to the runner like:
+    - Triggering the CI/CD on every push on Main Branch.
+    - To run the tasks on certain OS, like Ubuntu.
+    - To install dependencies in the runner.
+    - To run the tests using a headless chrome browser.
+    - To build and deploy the project.
+ Also, I had to configure VSCode to auto-format on save, and added a git hook with Husky to automate the linting process before each commit.
 
 To declare the structure of a Todo, I created its interface using the Angular CLI (ng generate interface). This allowed me to consistently create instances of a Todo in any part of the application. This interface is exported  in JS so that it can be imported from anywhere in the application.
 
@@ -36,13 +42,13 @@ where, in the case of receiving an (add) event, changes the value of the "isAddi
 
 ## Todos
 
-Once I had everything created, I started with the implementations. The first thing I made was the rendering of the todos, using a @for directive in the todo-list template. I sent each todo via (one way binding https://angular.io/guide/binding-syntax)[todo] in the todo-app instance tag to be able to use its properties in the todo-app template. This is possible because the todo-component-class had an @Input decorator where the todo information was stored. With the todo information, I called the properties I want to render using (interpolation) {{}} to access each one. Having the todo information, I used the method todoDone to update the database every time the checkbox was marked as done. This implementation used an event emitter with the @Output decorator to send this update to todo-list (father). This method returns a void value and is implemented using an if conditional where I ask for the actual state of the attribute complete, if its false then its marked as true and calls the event emitter to emit the event. If it is true, then it sets up the attribute as false and calls the event emitter to emit the event.
+Once I had everything created, I started with the implementations. The first thing I made was the rendering of the todos, using a @for directive in the todo-list template. I sent each todo via one way binding [todo] in the todo-app instance tag to be able to use its properties in the todo-app template. This is possible because the todo-component-class had an @Input decorator where the todo information was stored. With the todo information, I called the properties I want to render using interpolation {{}} to access each one. Having the todo information, I used the method todoDone to update the database every time the checkbox was marked as done. This implementation used an event emitter with the @Output decorator to send this update to todo-list (father). This method returns a void value and is implemented using an if conditional where I ask for the actual state of the attribute complete, if its false then its marked as true and calls the event emitter to emit the event. If it is true, then it sets up the attribute as false and calls the event emitter to emit the event.
 
 <!-- TODO: Review https://angular.io/guide/component-interaction -->
 
 ## Todo-Form-Component
 
-The next step was to implement the todo-Form component. For this to be done, it was necessary (why) to install Angular Material. With the Angular Material components (and with the help of ReactiveForms), I was able to create a usable form quickly, adding features such as a Dynamic Date Picker. In addition, in the template, I included form controls to show warnings when the input values were incorrect by raising some validation errors. These validations were performed in the class of the component. The submit button triggers the "emitTodo" method that calls the event emitter "newTodo" that sends the event to the father’s template (todo-list). This event is a collection of data that corresponds to all the properties of a todo.
+The next step was to implement the todo-Form component. For this to be done, it was necessary __(why)__ to install Angular Material. With the Angular Material components (and with the help of ReactiveForms), I was able to create a usable form quickly, adding features such as a Dynamic Date Picker. In addition, in the template, I included form controls to show warnings when the input values were incorrect by raising some validation errors. These validations were performed in the class of the component. The submit button triggers the "emitTodo" method that calls the event emitter "newTodo" that sends the event to the father’s template (todo-list). This event is a collection of data that corresponds to all the properties of a todo.
 
 ## Todo-List-Component
 
@@ -67,7 +73,7 @@ The main component of **Home Page** is the Todo-List-Component. In this componen
 - **doneTodo:** Method called to update a todo in the database using the service method _updateTodo_
 
 - **todoAdd:** Method called to group the data collected in the form and send it to the database using the todoService methods.
-
+__Change Spanish Names__
 - **verificarYManejarErrores:** This method is called to check the list using the method _verificarLista_ and to manage the errors that the task management could cause.
 
 - **verificarLista:** Method called to analyze whether the elements of the todo array are strings.

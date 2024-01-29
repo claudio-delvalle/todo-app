@@ -75,6 +75,7 @@ export class TodoListComponent implements OnInit {
       dueDate,
       complete: false,
     };
+    console.log('Date antes de ser enviado' ,todoSend.dueDate);
     this.todoService.addTodo(todoSend).subscribe((todo) => console.log(todo));
     this.isLoading = true;
     setTimeout(() => {

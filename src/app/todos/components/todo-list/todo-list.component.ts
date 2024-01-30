@@ -42,7 +42,7 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.todos$.subscribe((todos) => {
-      if (todos.length > 0) this.verificarYManejarErrores(todos);
+      if (todos.length > 0) this.checkAndManageErrors(todos);
     });
   }
 
@@ -75,7 +75,7 @@ export class TodoListComponent implements OnInit {
       dueDate,
       complete: false,
     };
-    console.log('Date antes de ser enviado' ,todoSend.dueDate);
+    console.log('Date antes de ser enviado', todoSend.dueDate);
     this.todoService.addTodo(todoSend).subscribe((todo) => console.log(todo));
     this.isLoading = true;
     setTimeout(() => {
@@ -86,20 +86,20 @@ export class TodoListComponent implements OnInit {
     // TODO: Avoid updating property with result
 
     this.todos$.subscribe((todos) => {
-      if (todos.length > 0) this.verificarYManejarErrores(todos);
+      if (todos.length > 0) this.checkAndManageErrors(todos);
     });
   }
 
-  verificarYManejarErrores(lista: unknown[]): void {
+  checkAndManageErrors(lista: unknown[]): void {
     try {
-      this.verificarLista(lista);
+      this.checkList(lista);
       this.error = false;
     } catch {
       this.error = true;
     }
   }
 
-  verificarLista(lista: unknown[]): void {
+  checkList(lista: unknown[]): void {
     for (const elemento of lista) {
       if (typeof elemento !== 'string') {
         throw new TypeError(

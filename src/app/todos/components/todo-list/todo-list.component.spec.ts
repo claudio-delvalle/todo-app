@@ -29,7 +29,7 @@ describe('TodoListComponent', () => {
      */
     let todos = undefined;
     const host: HTMLElement = fixture.nativeElement;
-    component.todoList.push({title:'prueba',complete:false});
+    component.todoList.push({ title: 'prueba', complete: false });
     fixture.detectChanges();
     todos = host.querySelectorAll('.todoItem');
     expect(component.todoList).toBeDefined();
@@ -55,7 +55,7 @@ describe('TodoListComponent', () => {
     let mensaje = undefined;
     const host: HTMLElement = fixture.nativeElement;
 
-    component.verificarYManejarErrores(['elemento1', 'elemento2', 3]);
+    component.checkAndManageErrors(['elemento1', 'elemento2', 3]);
 
     fixture.detectChanges();
     mensaje = host.querySelector('.error')?.textContent;

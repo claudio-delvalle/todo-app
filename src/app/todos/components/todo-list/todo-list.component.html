@@ -1,7 +1,7 @@
 <!-- TODO: Replace todoList with todos$ DONE -->
 <!-- TODO: Find a way to use only one 'async' pipe for all other uses of 'todos$' DONE-->
 
-<div class="listContainer">
+<div class="listContainer" aria-label="lista de tareas pendientes">
   @if(!isAdding) {
   <mat-card class="todoList">
     @if(todos$ |async; as todos){ @for (todo of todos; track $index) {
@@ -27,7 +27,11 @@
   } @if (isAdding && !isLoading) {
   <app-todo-form (newTodo)="todoAdd($event)"></app-todo-form>
   }
-  <app-add-button class="addTodo" (add)="isAdding = true"></app-add-button>
+  <app-add-button
+    aria-label="Boton para agregar una tarea"
+    class="addTodo"
+    (add)="isAdding = true"
+  ></app-add-button>
 </div>
 
 <div>

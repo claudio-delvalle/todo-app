@@ -2,24 +2,36 @@
   <p>
     <mat-form-field>
       <mat-label>Title</mat-label>
-      <input matInput formControlName="title" />
+      <input
+        aria-label="ingrese titulo de la tarea"
+        matInput
+        formControlName="title"
+      />
       @if (todoForm.controls['title'].errors?.['minlength']) {
-      <mat-error>Title is too short</mat-error>
+      <mat-error aria-label="el titulo es muy corto"
+        >Title is too short</mat-error
+      >
       } @else if (todoForm.controls['title'].errors?.['required'] &&
       (todoForm.controls['title'].dirty || todoForm.controls['title'].touched))
       {
-      <mat-error>Title is required</mat-error>
+      <mat-error aria-label="el titulo es obligatorio"
+        >Title is required</mat-error
+      >
       }
     </mat-form-field>
   </p>
   <p>
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <input matInput formControlName="description" />
+      <input
+        aria-label="agregue una descripcion"
+        matInput
+        formControlName="description"
+      />
       @if (todoForm.controls['description'].errors?.['maxlength'] &&
       (todoForm.controls['description'].dirty ||
       todoForm.controls['description'].touched)) {
-      <mat-error>Too long</mat-error>
+      <mat-error aria-label="la descripcion es muy larga">Too long</mat-error>
       }
     </mat-form-field>
   </p>
@@ -27,11 +39,14 @@
     <mat-form-field>
       <mat-label>Due Date</mat-label>
       <input
+        aria-label="Espacio o Enter para abrir el calendario"
         matInput
         [matDatepicker]="picker"
         [min]="today"
         formControlName="dueDate"
         placeholder="Choose a date"
+        (keydown.enter)="picker.open()"
+        (keydown.space)="picker.open()"
       />
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="picker">
@@ -40,7 +55,7 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </p>
-  
+
   <button
     mat-raised-button
     color="primary"
